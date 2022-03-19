@@ -158,11 +158,14 @@
 
             document.getElementById('start').addEventListener('click',function(){
                 applyTransition()
-                timer = setInterval(applyTransition,2000)
+                if(timer === null){
+                    timer = setInterval(applyTransition,2000)
+                }
             })            
 
             document.getElementById('stop').addEventListener('click',function(){
                 clearInterval(timer);
+                timer = null;
             })
     </script>
 </body>
