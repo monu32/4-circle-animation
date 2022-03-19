@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #outer{
+            position: relative;
+            width: 400px;
+            margin-right: auto;
+            margin-left: auto;
+            height: 400px;
+            font-size: 0px;
+        }
+        #top,#right,#bottom,#left{
+            position: absolute;
+            border-radius: 50%;      
+            transition: background 1s;
+        }
+        #top{
+            top:0%;
+            left:0%;
+            z-index: 4;
+        }
+        #right{
+            top:0%;
+            right:0%;
+            z-index: 3;
+        }
+
+        #bottom{
+            bottom: 0px;
+            right: 0px;
+            z-index: 2;
+        }
+
+        #left{
+            bottom:0px;
+            left:0px;
+            z-index: 1;
+        }
+        .right-semicircle{
+            display: inline-block;
+            width: 50px;
+            height:100px;
+            background-color: inherit;
+            border-radius:0 50px 50px 0;
+        }
+        .left-semicircle{
+            display: inline-block;
+            width: 50px;
+            height:100px;
+            background-color:inherit;
+            border-radius:50px 0 0 50px;
+        }
+        .horizontal-middlebox{
+            display: inline-block;
+            width: 0px;
+            height: 100px;
+            background-color:inherit;
+            transition: width 1s;
+        }
+        .top-semicircle{
+            width: 100px;
+            height: 50px;
+            background-color: inherit;
+            border-radius:50px 50px 0 0;
+        }
+        .down-semicircle{
+            width: 100px;
+            height:50px;
+            background-color: inherit;
+            border-radius:0 0 50px 50px;
+        }
+        .vertical-middlebox{
+            width: 100px;
+            height: 0px;
+            background-color:inherit;
+            transition: height 1s;
+        }
+        #btnContainer{
+            margin-top:40px;
+            width: 25%;
+            margin-right: auto;
+            margin-left: auto;
+            text-align: center;
+        }
+        #start,#stop{
+            background-color: green;
+            color: white;
+            font-size: 18px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="outer">
+        <div id="top" style="background-color: red;">
+            <div class="left-semicircle"></div>
+            <div class="horizontal-middlebox"></div>
+            <div class="right-semicircle"></div>    
+        </div>
+        <div id="right" style="background-color: yellow;">
+            <div class="top-semicircle"></div>
+            <div class="vertical-middlebox"></div>
+            <div class="down-semicircle"></div>    
+        </div>
+        <div id="bottom" style="background-color:blue;">
+            <div class="left-semicircle"></div>
+            <div class="horizontal-middlebox"></div>
+            <div class="right-semicircle"></div>    
+        </div>
+        <div id="left" style="background-color: green;">
+            <div class="top-semicircle"></div>
+            <div class="vertical-middlebox"></div>
+            <div class="down-semicircle"></div>    
+        </div>
+    </div>
+    <div id="btnContainer">
+        <button id="start">start</button>
+        <button id="stop">stop</button>
+    </div>    
+    <script>
+            function applyTransition() {
+                const top = document.getElementById("top");
+                const left = document.getElementById("left");
+                const bottom = document.getElementById("bottom");
+                const right = document.getElementById("right");
+
+                const horizontalMiddlebox = document.getElementsByClassName('horizontal-middlebox');
+                const verticalMiddlebox = document.getElementsByClassName('vertical-middlebox');
+
+                const topBackgroundColor = top.style['background-color'];
+                const bottomBackgroundColor = bottom.style['background-color'];
+
+                top.style['background-color'] = right.style['background-color'];
+                bottom.style['background-color'] = left.style['background-color'];
+                horizontalMiddlebox[0].style.width = '300px'
+                horizontalMiddlebox[1].style.width = '300px'
+                setTimeout(() => {
+                    horizontalMiddlebox[0].style.width = '0px'                    
+                    horizontalMiddlebox[1].style.width = '0px'
+                }, 1000);
+
+                left.style['background-color'] = topBackgroundColor;
+                right.style['background-color'] = bottomBackgroundColor;
+                verticalMiddlebox[0].style.height = '300px'
+                verticalMiddlebox[1].style.height = '300px'
+                setTimeout(() => {
+                    verticalMiddlebox[0].style.height = '0px'                    
+                    verticalMiddlebox[1].style.height = '0px'
+                }, 1000);
+            }
+
+            let timer = null;
+
+            document.getElementById('start').addEventListener('click',function(){
+                applyTransition()
+                timer = setInterval(applyTransition,2000)
+            })            
+
+            document.getElementById('stop').addEventListener('click',function(){
+                clearInterval(timer);
+            })
+    </script>
+</body>
+</html>
